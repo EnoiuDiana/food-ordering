@@ -22,13 +22,10 @@ int main() {
     int pricesDrinks[] = {5,5,5,4};
     char cutlery[][15] = {"Yes","No,thanks"};
     char addinfo[100];
-
     //user input
     char username[20];
     char password[20];
     int choice, typeChoice, specTypeChoice, drinkChoice, cutleryChoice;
-
-
     //code
     int state=0;
     int order=0;
@@ -63,7 +60,6 @@ int main() {
             }
             case 2: {
                 //selecting specific food
-
                 printf("Please choose the type of %s:\n",foodTypes[typeChoice]);
                 for(int i=0; i<nrSpecType[typeChoice]; i++){
                     putchar('a'+i);
@@ -123,6 +119,7 @@ int main() {
                 //add info
                 printf("Any additional info?\n");
                 gets(addinfo);
+                printf("%s",addinfo);
                 state++;
                 break;
             }
@@ -134,7 +131,9 @@ int main() {
                 printf("Food Items:\n---%s: %d\n---%s: %d\n",specTypes[typeChoice][specTypeChoice],
                        prices[typeChoice][specTypeChoice],drinks[drinkChoice],pricesDrinks[drinkChoice]);
                 printf("Cutlery: %s\n",cutlery[cutleryChoice]);
-                printf("Additional info: %s\n",addinfo);
+                if(addinfo[0] != '\0'){
+                    printf("Additional info: %s\n",addinfo);
+                }
                 printf("Payment amount: %d\n",prices[typeChoice][specTypeChoice]+pricesDrinks[drinkChoice]);
                 printf("-------------------\n"
                        "a) Confirm order\n"
@@ -153,9 +152,7 @@ int main() {
                 state++;
                 break;
             }
-
         }
-
     }
     printf("Order confirmed! Thank you for buying from us, %s!\n",username);
     return 0;
