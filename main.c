@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int main() {
     printf("Welcome to Food Thingies!\n"
@@ -131,7 +132,7 @@ int main() {
                 printf("Food Items:\n---%s: %d\n---%s: %d\n",specTypes[typeChoice][specTypeChoice],
                        prices[typeChoice][specTypeChoice],drinks[drinkChoice],pricesDrinks[drinkChoice]);
                 printf("Cutlery: %s\n",cutlery[cutleryChoice]);
-                if(addinfo[0] != '\0'){
+                if(strcmp(addinfo,"\0") != 0){
                     printf("Additional info: %s\n",addinfo);
                 }
                 printf("Payment amount: %d\n",prices[typeChoice][specTypeChoice]+pricesDrinks[drinkChoice]);
