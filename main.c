@@ -1,10 +1,15 @@
 #include <stdio.h>
 #include <string.h>
 #define MAX_FOOD_TYPE_NAME 10
+#define MAX_SPEC_TYPE_NAME 100
+#define MAX_NR_SPEC_TYPES 4
+#define MAX_NR_PRICES 4
+
 void inputUserData(char username[],char password[]);
 void displayFoodTypes(int nrOfFoodTypes,char foodTypes[][MAX_FOOD_TYPE_NAME]);
 int getChoiceIndex(int nrOfChoices,int *state);
-
+void displaySpecificFoods(int nrSpecType[],int typeChoice,char foodTypes[][MAX_FOOD_TYPE_NAME],
+                          char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int prices[][MAX_NR_PRICES]);
 int main() {
     printf("Welcome to Food Thingies!\n"
            "Please sign in to continue!\n");
@@ -12,13 +17,13 @@ int main() {
     // food data
     int nrOfFoodTypes = 3;
     char foodTypes[][MAX_FOOD_TYPE_NAME] = {"Pizza","Pasta","Salad"};
-    char nrSpecType[] = {3,2,4};
-    char specTypes[3][4][100] = {
+    int nrSpecType[] = {3,2,4};
+    char specTypes[3][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME] = {
             {"Pizza Carbonara","Pizza Diavola","Pizza Margherita"},
             {"Chicken alfredo","Mac&cheese"},
             {"Tuna Salad","Chicken Salad","Greek Salad","Cobb"}
     };
-    int prices[3][4] = {
+    int prices[3][MAX_NR_PRICES] = {
             {21,23,19},
             {23,21},
             {23,22,19,21}
@@ -51,12 +56,7 @@ int main() {
             }
             case 2: {
                 //selecting specific food
-                printf("Please choose the type of %s:\n",foodTypes[typeChoice]);
-                for(int i=0; i<nrSpecType[typeChoice]; i++){
-                    putchar('a'+i);
-                    printf(") %s: %d\n",specTypes[typeChoice][i],prices[typeChoice][i]);
-                }
-                printf("%c) Go back.\n",'a'+nrSpecType[typeChoice]);
+                displaySpecificFoods(nrSpecType,typeChoice,foodTypes,specTypes,prices);
                 choice = getchar();
                 //consume new line
                 getchar();
@@ -156,6 +156,7 @@ void inputUserData(char username[],char password[]){
     gets(password);
 }
 void displayFoodTypes(int nrOfFoodTypes,char foodTypes[][MAX_FOOD_TYPE_NAME]){
+    //selecting food type
     printf("Please choose the food you feel like eating today:\n");
     for(int i=0; i<nrOfFoodTypes; i++) {
         putchar('a' + i);
@@ -175,4 +176,14 @@ int getChoiceIndex(int nrOfChoices,int *state){
         (*state)++;
     }
     return choiceIndex;
+}
+void displaySpecificFoods(int nrSpecType[],int typeChoice,char foodTypes[][MAX_FOOD_TYPE_NAME],
+        char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int prices[][MAX_NR_PRICES]){
+    //selecting specific food
+    printf("Please choose the type of %s:\n",foodTypes[typeChoice]);
+    for(int i=0; i<nrSpecType[typeChoice]; i++){
+        putchar('a'+i);
+        printf(") %s: %d\n",specTypes[typeChoice][i],prices[typeChoice][i]);
+    }
+    printf("%c) Go back.\n",'a'+nrSpecType[typeChoice]);
 }
