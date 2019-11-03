@@ -1,9 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 
+void inputUserData(char username[],char password[]);
+void displayFoodTypes(int nrOfFoodTypes,char foodTypes[]);
+
 int main() {
     printf("Welcome to Food Thingies!\n"
            "Please sign in to continue!\n");
+
     // food data
     int nrOfFoodTypes = 3;
     char foodTypes[][10] = {"Pizza","Pasta","Salad"};
@@ -23,31 +27,24 @@ int main() {
     int pricesDrinks[] = {5,5,5,4};
     char cutlery[][15] = {"Yes","No,thanks"};
     char addinfo[100];
+
     //user input
     char username[20];
     char password[20];
     int choice, typeChoice, specTypeChoice, drinkChoice, cutleryChoice;
+
     //code
     int state=0;
     int order=0;
     while(!order) {
         switch(state) {
             case 0: {
-                printf("---Username\n");
-                gets(username);
-                printf("---Password\n");
-                gets(password);
+                inputUserData(username,password);
                 state++;
                 break;
             }
             case 1: {
-                //choose the food type
-                printf("Please choose the food you feel like eating today:\n");
-                for(int i=0; i<nrOfFoodTypes; i++) {
-                    putchar('a' + i);
-                    printf(") %s\n", foodTypes[i]);
-                }
-                printf("%c) Go back.\n",'a'+nrOfFoodTypes);
+                displayFoodTypes(nrOfFoodTypes,foodTypes);
                 choice = getchar();
                 //consume new line
                 getchar();
@@ -98,7 +95,7 @@ int main() {
                 break;
             }
             case 4: {
-                //cutlery?
+                //cutlery
                 printf("Do you want cutlery?\n");
                 for(int i=0; i<2; i++){
                     putchar('a'+i);
@@ -157,4 +154,19 @@ int main() {
     }
     printf("Order confirmed! Thank you for buying from us, %s!\n",username);
     return 0;
+}
+void inputUserData(char username[],char password[]){
+    //user input
+    printf("---Username\n");
+    gets(username);
+    printf("---Password\n");
+    gets(password);
+}
+void displayFoodTypes(int nrOfFoodTypes,char foodTypes[]){
+    printf("Please choose the food you feel like eating today:\n");
+    for(int i=0; i<nrOfFoodTypes; i++) {
+        putchar('a' + i);
+        printf(") %s\n", foodTypes[i]);
+    }
+    printf("%c) Go back.\n",'a'+nrOfFoodTypes);
 }
