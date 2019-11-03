@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <string.h>
-
+#define MAX_FOOD_TYPE_NAME 10
 void inputUserData(char username[],char password[]);
-void displayFoodTypes(int nrOfFoodTypes,char foodTypes[]);
+void displayFoodTypes(int nrOfFoodTypes,char foodTypes[][MAX_FOOD_TYPE_NAME]);
+int getChoiceIndex(int nrOfChoices,int *state);
 
 int main() {
     printf("Welcome to Food Thingies!\n"
@@ -10,7 +11,7 @@ int main() {
 
     // food data
     int nrOfFoodTypes = 3;
-    char foodTypes[][10] = {"Pizza","Pasta","Salad"};
+    char foodTypes[][MAX_FOOD_TYPE_NAME] = {"Pizza","Pasta","Salad"};
     char nrSpecType[] = {3,2,4};
     char specTypes[3][4][100] = {
             {"Pizza Carbonara","Pizza Diavola","Pizza Margherita"},
@@ -45,15 +46,7 @@ int main() {
             }
             case 1: {
                 displayFoodTypes(nrOfFoodTypes,foodTypes);
-                choice = getchar();
-                //consume new line
-                getchar();
-                if(choice == 'a'+nrOfFoodTypes){
-                    state--;
-                    break;
-                }
-                typeChoice = choice - 'a';
-                state++;
+                typeChoice = getChoiceIndex(nrOfFoodTypes, &state);
                 break;
             }
             case 2: {
@@ -162,11 +155,24 @@ void inputUserData(char username[],char password[]){
     printf("---Password\n");
     gets(password);
 }
-void displayFoodTypes(int nrOfFoodTypes,char foodTypes[]){
+void displayFoodTypes(int nrOfFoodTypes,char foodTypes[][MAX_FOOD_TYPE_NAME]){
     printf("Please choose the food you feel like eating today:\n");
     for(int i=0; i<nrOfFoodTypes; i++) {
         putchar('a' + i);
         printf(") %s\n", foodTypes[i]);
     }
     printf("%c) Go back.\n",'a'+nrOfFoodTypes);
+}
+int getChoiceIndex(int nrOfChoices,int *state){
+    int choiceIndex;
+    char choice = getchar();
+    //consume new line
+    getchar();
+    if(choice == 'a'+nrOfChoices){
+        (*state)--;
+    } else {
+        choiceIndex = choice - 'a';
+        (*state)++;
+    }
+    return choiceIndex;
 }
