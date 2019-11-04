@@ -14,6 +14,9 @@ void displaySpecificFoods(int nrSpecType[],int typeChoice,char foodTypes[][MAX_F
 void displayDrinks(char foodTypes[][MAX_FOOD_TYPE_NAME],int typeChoice,int nrDrinks,char drinks[][MAX_DR_CUT_NAME],
         int pricesDrinks[]);
 void displayCutlery(char cutlery[][MAX_DR_CUT_NAME]);
+void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int typeChoice,int specTypeChoice,
+        int prices[][MAX_NR_PRICES],char drinks[][MAX_DR_CUT_NAME],int drinkChoice,int pricesDrinks[],
+        char cutlery[][MAX_DR_CUT_NAME],int cutleryChoice,char addinfo[]);
 
 int main() {
     printf("Welcome to Food Thingies!\n"
@@ -91,13 +94,8 @@ int main() {
                 printf("This is your order:\n"
                        "-------------------\n");
                 printf("Name:%s\n",username);
-                printf("Food Items:\n---%s: %d\n---%s: %d\n",specTypes[typeChoice][specTypeChoice],
-                       prices[typeChoice][specTypeChoice],drinks[drinkChoice],pricesDrinks[drinkChoice]);
-                printf("Cutlery: %s\n",cutlery[cutleryChoice]);
-                if(strcmp(addinfo,"\0") != 0){
-                    printf("Additional info: %s\n",addinfo);
-                }
-                printf("Payment amount: %d\n",prices[typeChoice][specTypeChoice]+pricesDrinks[drinkChoice]);
+                displayOrder(specTypes,typeChoice,specTypeChoice,prices,drinks,drinkChoice,pricesDrinks,cutlery,
+                cutleryChoice,addinfo);
                 printf("-------------------\n"
                        "a) Confirm order\n"
                        "b) Go back\n");
@@ -176,4 +174,15 @@ void displayCutlery(char cutlery[][MAX_DR_CUT_NAME]){
         printf(") %s\n",cutlery[i]);
     }
     printf("c) Go back.\n");
+}
+void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int typeChoice,int specTypeChoice,
+        int prices[][MAX_NR_PRICES],char drinks[][MAX_DR_CUT_NAME],int drinkChoice,int pricesDrinks[],
+        char cutlery[][MAX_DR_CUT_NAME],int cutleryChoice,char addinfo[]){
+    printf("Food Items:\n---%s: %d\n---%s: %d\n",specTypes[typeChoice][specTypeChoice],
+           prices[typeChoice][specTypeChoice],drinks[drinkChoice],pricesDrinks[drinkChoice]);
+    printf("Cutlery: %s\n",cutlery[cutleryChoice]);
+    if(strcmp(addinfo,"\0") != 0){
+        printf("Additional info: %s\n",addinfo);
+    }
+    printf("Payment amount: %d\n",prices[typeChoice][specTypeChoice]+pricesDrinks[drinkChoice]);
 }
