@@ -4,12 +4,16 @@
 #define MAX_SPEC_TYPE_NAME 100
 #define MAX_NR_SPEC_TYPES 4
 #define MAX_NR_PRICES 4
+#define MAX_DRINK_NAME 15
 
 void inputUserData(char username[],char password[]);
 void displayFoodTypes(int nrOfFoodTypes,char foodTypes[][MAX_FOOD_TYPE_NAME]);
 int getChoiceIndex(int nrOfChoices,int *state);
 void displaySpecificFoods(int nrSpecType[],int typeChoice,char foodTypes[][MAX_FOOD_TYPE_NAME],
-                          char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int prices[][MAX_NR_PRICES]);
+        char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int prices[][MAX_NR_PRICES]);
+void displayDrinks(char foodTypes[][MAX_FOOD_TYPE_NAME],int typeChoice,int nrDrinks,char drinks[][MAX_DRINK_NAME],
+        int pricesDrinks[]);
+
 int main() {
     printf("Welcome to Food Thingies!\n"
            "Please sign in to continue!\n");
@@ -45,11 +49,13 @@ int main() {
     while(!order) {
         switch(state) {
             case 0: {
+                //user input
                 inputUserData(username,password);
                 state++;
                 break;
             }
             case 1: {
+                //selecting food type
                 displayFoodTypes(nrOfFoodTypes,foodTypes);
                 typeChoice = getChoiceIndex(nrOfFoodTypes, &state);
                 break;
@@ -57,34 +63,13 @@ int main() {
             case 2: {
                 //selecting specific food
                 displaySpecificFoods(nrSpecType,typeChoice,foodTypes,specTypes,prices);
-                choice = getchar();
-                //consume new line
-                getchar();
-                if(choice == 'a'+nrSpecType[typeChoice]){
-                    state--;
-                    break;
-                }
-                specTypeChoice = choice - 'a';
-                state++;
+                specTypeChoice = getChoiceIndex(nrSpecType[typeChoice], &state);
                 break;
             }
             case 3: {
                 //selecting drink
-                printf("Please choose a drink to go with your %s:\n",foodTypes[typeChoice]);
-                for(int i=0; i<nrDrinks; i++){
-                    putchar('a'+i);
-                    printf(") %s: %d\n",drinks[i],pricesDrinks[i]);
-                }
-                printf("%c) Go back.\n",'a'+nrDrinks);
-                choice = getchar();
-                //consume new line
-                getchar();
-                if(choice == 'a'+nrDrinks){
-                    state--;
-                    break;
-                }
-                drinkChoice = choice - 'a';
-                state++;
+                displayDrinks(foodTypes,typeChoice,nrDrinks,drinks,pricesDrinks);
+                drinkChoice = getChoiceIndex(nrDrinks, &state);
                 break;
             }
             case 4: {
@@ -110,7 +95,6 @@ int main() {
                 //add info
                 printf("Any additional info?\n");
                 gets(addinfo);
-                printf("%s",addinfo);
                 state++;
                 break;
             }
@@ -186,4 +170,14 @@ void displaySpecificFoods(int nrSpecType[],int typeChoice,char foodTypes[][MAX_F
         printf(") %s: %d\n",specTypes[typeChoice][i],prices[typeChoice][i]);
     }
     printf("%c) Go back.\n",'a'+nrSpecType[typeChoice]);
+}
+void displayDrinks(char foodTypes[][MAX_FOOD_TYPE_NAME],int typeChoice,int nrDrinks,char drinks[][MAX_DRINK_NAME],
+        int pricesDrinks[]){
+    //selecting drink
+    printf("Please choose a drink to go with your %s:\n",foodTypes[typeChoice]);
+    for(int i=0; i<nrDrinks; i++){
+        putchar('a'+i);
+        printf(") %s: %d\n",drinks[i],pricesDrinks[i]);
+    }
+    printf("%c) Go back.\n",'a'+nrDrinks);
 }
