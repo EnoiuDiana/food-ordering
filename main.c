@@ -1,12 +1,7 @@
 #include <stdio.h>
-#include <string.h>
 #include "userdata.h"
 #include "display.h"
-
-int getChoiceIndex(int nrOfChoices,int *state);
-void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int typeChoice,int specTypeChoice,
-        int prices[][MAX_NR_PRICES],char drinks[][MAX_DR_CUT_NAME],int drinkChoice,int pricesDrinks[],
-        char cutlery[][MAX_DR_CUT_NAME],int cutleryChoice,char addinfo[]);
+#include "choice.h"
 
 int main() {
     printf("Welcome to Food Thingies!\n"
@@ -67,7 +62,6 @@ int main() {
                 break;
             }
             case 5: {
-                //add info
                 displayAddInfo(addInfo,&state);
                 break;
             }
@@ -93,30 +87,4 @@ int main() {
     }
     printf("Order confirmed! Thank you for buying from us, %s!\n",username);
     return 0;
-}
-
-int getChoiceIndex(int nrOfChoices,int *state){
-    int choiceIndex;
-    char choice = getchar();
-    //consume new line
-    getchar();
-    if(choice == 'a'+nrOfChoices){
-        (*state)--;
-    } else {
-        choiceIndex = choice - 'a';
-        (*state)++;
-    }
-    return choiceIndex;
-}
-
-void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int typeChoice,int specTypeChoice,
-        int prices[][MAX_NR_PRICES],char drinks[][MAX_DR_CUT_NAME],int drinkChoice,int pricesDrinks[],
-        char cutlery[][MAX_DR_CUT_NAME],int cutleryChoice,char addinfo[]){
-    printf("Food Items:\n---%s: %d\n---%s: %d\n",specTypes[typeChoice][specTypeChoice],
-           prices[typeChoice][specTypeChoice],drinks[drinkChoice],pricesDrinks[drinkChoice]);
-    printf("Cutlery: %s\n",cutlery[cutleryChoice]);
-    if(strcmp(addinfo,"\0") != 0){
-        printf("Additional info: %s\n",addinfo);
-    }
-    printf("Payment amount: %d\n",prices[typeChoice][specTypeChoice]+pricesDrinks[drinkChoice]);
 }

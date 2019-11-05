@@ -3,6 +3,7 @@
 //
 #include <stdio.h>
 #include "display.h"
+#include <string.h>
 
 void displayFoodTypes(int nrOfFoodTypes,char foodTypes[][MAX_FOOD_TYPE_NAME]){
     //selecting food type
@@ -47,4 +48,15 @@ void displayAddInfo(char addInfo[],int *state){
     printf("Any additional info?\n");
     gets(addInfo);
     (*state)++;
+}
+void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int typeChoice,int specTypeChoice,
+                  int prices[][MAX_NR_PRICES],char drinks[][MAX_DR_CUT_NAME],int drinkChoice,int pricesDrinks[],
+                  char cutlery[][MAX_DR_CUT_NAME],int cutleryChoice,char addinfo[]){
+    printf("Food Items:\n---%s: %d\n---%s: %d\n",specTypes[typeChoice][specTypeChoice],
+           prices[typeChoice][specTypeChoice],drinks[drinkChoice],pricesDrinks[drinkChoice]);
+    printf("Cutlery: %s\n",cutlery[cutleryChoice]);
+    if(strcmp(addinfo,"\0") != 0){
+        printf("Additional info: %s\n",addinfo);
+    }
+    printf("Payment amount: %d\n",prices[typeChoice][specTypeChoice]+pricesDrinks[drinkChoice]);
 }
