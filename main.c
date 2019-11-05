@@ -14,6 +14,8 @@ void displaySpecificFoods(int nrSpecType[],int typeChoice,char foodTypes[][MAX_F
 void displayDrinks(char foodTypes[][MAX_FOOD_TYPE_NAME],int typeChoice,int nrDrinks,char drinks[][MAX_DR_CUT_NAME],
         int pricesDrinks[]);
 void displayCutlery(char cutlery[][MAX_DR_CUT_NAME]);
+void addInfo(char addinfo[],int *state);
+void displayUserData(char username[]);
 void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int typeChoice,int specTypeChoice,
         int prices[][MAX_NR_PRICES],char drinks[][MAX_DR_CUT_NAME],int drinkChoice,int pricesDrinks[],
         char cutlery[][MAX_DR_CUT_NAME],int cutleryChoice,char addinfo[]);
@@ -45,72 +47,58 @@ int main() {
     //user input
     char username[20];
     char password[20];
-    int choice, typeChoice, specTypeChoice, drinkChoice, cutleryChoice;
+    int choice, typeChoice, specTypeChoice, drinkChoice, cutleryChoice, confirmChoice;
 
-    //code
     int state=0;
     int order=0;
     while(!order) {
         switch(state) {
             case 0: {
-                //user input
                 inputUserData(username,password);
                 state++;
                 break;
             }
             case 1: {
-                //selecting food type
                 displayFoodTypes(nrOfFoodTypes,foodTypes);
                 typeChoice = getChoiceIndex(nrOfFoodTypes, &state);
                 break;
             }
             case 2: {
-                //selecting specific food
                 displaySpecificFoods(nrSpecType,typeChoice,foodTypes,specTypes,prices);
                 specTypeChoice = getChoiceIndex(nrSpecType[typeChoice], &state);
                 break;
             }
             case 3: {
-                //selecting drink
                 displayDrinks(foodTypes,typeChoice,nrDrinks,drinks,pricesDrinks);
                 drinkChoice = getChoiceIndex(nrDrinks, &state);
                 break;
             }
             case 4: {
-                //cutlery
                 displayCutlery(cutlery);
                 cutleryChoice = getChoiceIndex(2, &state);
                 break;
             }
             case 5: {
                 //add info
-                printf("Any additional info?\n");
-                gets(addinfo);
-                state++;
+                addInfo(addinfo,&state);
                 break;
             }
             case 6: {
                 //order print
                 printf("This is your order:\n"
                        "-------------------\n");
-                printf("Name:%s\n",username);
+                displayUserData(username);
                 displayOrder(specTypes,typeChoice,specTypeChoice,prices,drinks,drinkChoice,pricesDrinks,cutlery,
                 cutleryChoice,addinfo);
                 printf("-------------------\n"
                        "a) Confirm order\n"
                        "b) Go back\n");
-                choice = getchar();
-                //consume new line
-                getchar();
-                if(choice == 'b'){
-                    state--;
-                    state--;
-                    break;
-                }
-                else {
+                confirmChoice = getChoiceIndex(1, &state);
+                if(confirmChoice == 0){
                     order=1;
+                } else {
+                    state--;
                 }
-                state++;
                 break;
             }
         }
@@ -168,12 +156,22 @@ void displayDrinks(char foodTypes[][MAX_FOOD_TYPE_NAME],int typeChoice,int nrDri
     printf("%c) Go back.\n",'a'+nrDrinks);
 }
 void displayCutlery(char cutlery[][MAX_DR_CUT_NAME]){
+    //cutlery
     printf("Do you want cutlery?\n");
     for(int i=0; i<2; i++){
         putchar('a'+i);
         printf(") %s\n",cutlery[i]);
     }
     printf("c) Go back.\n");
+}
+void addInfo(char addinfo[],int *state){
+    //add info
+    printf("Any additional info?\n");
+    gets(addinfo);
+    (*state)++;
+}
+void displayUserData(char username[]){
+    printf("Name:%s\n",username);
 }
 void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int typeChoice,int specTypeChoice,
         int prices[][MAX_NR_PRICES],char drinks[][MAX_DR_CUT_NAME],int drinkChoice,int pricesDrinks[],
