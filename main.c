@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <string.h>
+#include "userdata.h"
 #define MAX_FOOD_TYPE_NAME 10
 #define MAX_SPEC_TYPE_NAME 100
 #define MAX_NR_SPEC_TYPES 4
 #define MAX_NR_PRICES 4
 #define MAX_DR_CUT_NAME 15
 
-void inputUserData(char username[],char password[]);
 void displayFoodTypes(int nrOfFoodTypes,char foodTypes[][MAX_FOOD_TYPE_NAME]);
 int getChoiceIndex(int nrOfChoices,int *state);
 void displaySpecificFoods(int nrSpecType[],int typeChoice,char foodTypes[][MAX_FOOD_TYPE_NAME],
@@ -15,7 +15,6 @@ void displayDrinks(char foodTypes[][MAX_FOOD_TYPE_NAME],int typeChoice,int nrDri
         int pricesDrinks[]);
 void displayCutlery(char cutlery[][MAX_DR_CUT_NAME]);
 void addInfo(char addinfo[],int *state);
-void displayUserData(char username[]);
 void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int typeChoice,int specTypeChoice,
         int prices[][MAX_NR_PRICES],char drinks[][MAX_DR_CUT_NAME],int drinkChoice,int pricesDrinks[],
         char cutlery[][MAX_DR_CUT_NAME],int cutleryChoice,char addinfo[]);
@@ -106,13 +105,6 @@ int main() {
     printf("Order confirmed! Thank you for buying from us, %s!\n",username);
     return 0;
 }
-void inputUserData(char username[],char password[]){
-    //user input
-    printf("---Username\n");
-    gets(username);
-    printf("---Password\n");
-    gets(password);
-}
 void displayFoodTypes(int nrOfFoodTypes,char foodTypes[][MAX_FOOD_TYPE_NAME]){
     //selecting food type
     printf("Please choose the food you feel like eating today:\n");
@@ -169,9 +161,6 @@ void addInfo(char addinfo[],int *state){
     printf("Any additional info?\n");
     gets(addinfo);
     (*state)++;
-}
-void displayUserData(char username[]){
-    printf("Name:%s\n",username);
 }
 void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int typeChoice,int specTypeChoice,
         int prices[][MAX_NR_PRICES],char drinks[][MAX_DR_CUT_NAME],int drinkChoice,int pricesDrinks[],
