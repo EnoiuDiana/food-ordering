@@ -6,7 +6,6 @@
 int main() {
     printf("Welcome to Food Thingies!\n"
            "Please sign in to continue!\n");
-
     // food data
     int nrOfFoodTypes = 3;
     char foodTypes[][MAX_FOOD_TYPE_NAME] = {"Pizza","Pasta","Salad"};
@@ -26,7 +25,6 @@ int main() {
     int pricesDrinks[] = {5,5,5,4};
     char cutlery[][MAX_DR_CUT_NAME] = {"Yes","No,thanks"};
     char addInfo[200];
-
     //user input
     char username[20];
     char password[20];
@@ -67,20 +65,12 @@ int main() {
             }
             case 6: {
                 //order print
-                printf("This is your order:\n"
-                       "-------------------\n");
+                displayHeaderOrder();
                 displayUserData(username);
-                displayOrder(specTypes,typeChoice,specTypeChoice,prices,drinks,drinkChoice,pricesDrinks,cutlery,
-                cutleryChoice,addInfo);
-                printf("-------------------\n"
-                       "a) Confirm order\n"
-                       "b) Go back\n");
+                displayOrder(specTypes,typeChoice,specTypeChoice,prices,drinks,drinkChoice,pricesDrinks,cutlery,cutleryChoice,addInfo);
+                displayFooterOrder();
                 confirmChoice = getChoiceIndex(1, &state);
-                if(confirmChoice == 0){
-                    order=1;
-                } else {
-                    state--;
-                }
+                confirmOrder(confirmChoice, &order, &state);
                 break;
             }
         }

@@ -16,3 +16,10 @@ int getChoiceIndex(int nrOfChoices,int *state){
     }
     return choiceIndex;
 }
+void confirmOrder(int confirmChoice,int *order,int *state){
+    if(confirmChoice == 0){
+        (*order) = 1;
+    } else {
+        (*state)--;
+    }
+}
