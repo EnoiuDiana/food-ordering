@@ -4,24 +4,19 @@
 #include "choice.h"
 
 int main() {
-    printf("Welcome to Food Thingies!\n"
-           "Please sign in to continue!\n");
+    printf("Welcome to Food Thingies!\nPlease sign in to continue!\n");
     // food data
-    int nrOfFoodTypes = 3,nrSpecType[] = {3,2,4};
-    char foodTypes[][MAX_FOOD_TYPE_NAME] = {"Pizza","Pasta","Salad"};
-    char specTypes[3][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME] = {
-            {"Pizza Carbonara","Pizza Diavola","Pizza Margherita"},
-            {"Chicken alfredo","Mac&cheese"},
-            {"Tuna Salad","Chicken Salad","Greek Salad","Cobb"}
-    };
-    int prices[3][MAX_NR_PRICES] = {
+    int nrOfFoodTypes = 3,nrSpecType[] = {3,2,4},nrDrinks = 4, pricesDrinks[] = {5,5,5,4}, prices[3][MAX_NR_PRICES] = {
             {21,23,19},
             {23,21},
             {23,22,19,21}
     };
-    int nrDrinks = 4, pricesDrinks[] = {5,5,5,4};
-    char drinks[][MAX_DR_CUT_NAME] = {"Coca-Cola","Fanta","Lipton","Water"};
-    char cutlery[][MAX_DR_CUT_NAME] = {"Yes","No,thanks"}, addInfo[200];
+    char foodTypes[][MAX_FOOD_TYPE_NAME] = {"Pizza","Pasta","Salad"}, specTypes[3][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME] = {
+            {"Pizza Carbonara","Pizza Diavola","Pizza Margherita"},
+            {"Chicken alfredo","Mac&cheese"},
+            {"Tuna Salad","Chicken Salad","Greek Salad","Cobb"}
+    };
+    char drinks[][MAX_DR_CUT_NAME] = {"Coca-Cola","Fanta","Lipton","Water"},cutlery[][MAX_DR_CUT_NAME] = {"Yes","No,thanks"}, addInfo[200];
     //user input
     char username[20], password[20];
     int typeChoice, specTypeChoice, drinkChoice, cutleryChoice, confirmChoice;
