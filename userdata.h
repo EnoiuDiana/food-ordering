@@ -6,6 +6,5 @@
 #define FOOD_ORDERING_USERDATA_H
 
 void inputUserData(char username[],char password[]);
-void displayUserData(char username[]);
 
 #endif //FOOD_ORDERING_USERDATA_H

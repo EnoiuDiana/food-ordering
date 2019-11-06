@@ -10,6 +10,4 @@ void inputUserData(char username[],char password[]){
     printf("---Password\n");
     gets(password);
 }
-void displayUserData(char username[]){
-    printf("Name:%s\n",username);
-}
+

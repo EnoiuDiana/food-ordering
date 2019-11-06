@@ -7,9 +7,8 @@ int main() {
     printf("Welcome to Food Thingies!\n"
            "Please sign in to continue!\n");
     // food data
-    int nrOfFoodTypes = 3;
+    int nrOfFoodTypes = 3,nrSpecType[] = {3,2,4};
     char foodTypes[][MAX_FOOD_TYPE_NAME] = {"Pizza","Pasta","Salad"};
-    int nrSpecType[] = {3,2,4};
     char specTypes[3][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME] = {
             {"Pizza Carbonara","Pizza Diavola","Pizza Margherita"},
             {"Chicken alfredo","Mac&cheese"},
@@ -20,18 +19,14 @@ int main() {
             {23,21},
             {23,22,19,21}
     };
-    int nrDrinks = 4;
+    int nrDrinks = 4, pricesDrinks[] = {5,5,5,4};
     char drinks[][MAX_DR_CUT_NAME] = {"Coca-Cola","Fanta","Lipton","Water"};
-    int pricesDrinks[] = {5,5,5,4};
-    char cutlery[][MAX_DR_CUT_NAME] = {"Yes","No,thanks"};
-    char addInfo[200];
+    char cutlery[][MAX_DR_CUT_NAME] = {"Yes","No,thanks"}, addInfo[200];
     //user input
-    char username[20];
-    char password[20];
-    int choice, typeChoice, specTypeChoice, drinkChoice, cutleryChoice, confirmChoice;
+    char username[20], password[20];
+    int typeChoice, specTypeChoice, drinkChoice, cutleryChoice, confirmChoice;
 
-    int state=0;
-    int order=0;
+    int state=0, order=0;
     while(!order) {
         switch(state) {
             case 0: {
@@ -64,11 +59,7 @@ int main() {
                 break;
             }
             case 6: {
-                //order print
-                displayHeaderOrder();
-                displayUserData(username);
-                displayOrder(specTypes,typeChoice,specTypeChoice,prices,drinks,drinkChoice,pricesDrinks,cutlery,cutleryChoice,addInfo);
-                displayFooterOrder();
+                displayOrder(specTypes,typeChoice,specTypeChoice,prices,drinks,drinkChoice,pricesDrinks,cutlery,cutleryChoice,addInfo,username);
                 confirmChoice = getChoiceIndex(1, &state);
                 confirmOrder(confirmChoice, &order, &state);
                 break;

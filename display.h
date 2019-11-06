@@ -20,8 +20,6 @@ void displayCutlery(char cutlery[][MAX_DR_CUT_NAME]);
 void displayAddInfo(char addinfo[],int *state);
 void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int typeChoice,int specTypeChoice,
                   int prices[][MAX_NR_PRICES],char drinks[][MAX_DR_CUT_NAME],int drinkChoice,int pricesDrinks[],
-                  char cutlery[][MAX_DR_CUT_NAME],int cutleryChoice,char addinfo[]);
-void displayHeaderOrder();
-void displayFooterOrder();
+                  char cutlery[][MAX_DR_CUT_NAME],int cutleryChoice,char addinfo[],char username[]);
 
 #endif //FOOD_ORDERING_DISPLAY_H

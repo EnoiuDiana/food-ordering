@@ -49,13 +49,13 @@ void displayAddInfo(char addInfo[],int *state){
     gets(addInfo);
     (*state)++;
 }
-void displayHeaderOrder(){
-    printf("This is your order:\n"
-           "-------------------\n");
-}
 void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int typeChoice,int specTypeChoice,
                   int prices[][MAX_NR_PRICES],char drinks[][MAX_DR_CUT_NAME],int drinkChoice,int pricesDrinks[],
-                  char cutlery[][MAX_DR_CUT_NAME],int cutleryChoice,char addinfo[]){
+                  char cutlery[][MAX_DR_CUT_NAME],int cutleryChoice,char addinfo[],char username[]){
+    //order print
+    printf("This is your order:\n"
+           "-------------------\n");
+    printf("Name:%s\n",username);
     printf("Food Items:\n---%s: %d\n---%s: %d\n",specTypes[typeChoice][specTypeChoice],
            prices[typeChoice][specTypeChoice],drinks[drinkChoice],pricesDrinks[drinkChoice]);
     printf("Cutlery: %s\n",cutlery[cutleryChoice]);
@@ -63,9 +63,8 @@ void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int ty
         printf("Additional info: %s\n",addinfo);
     }
     printf("Payment amount: %d\n",prices[typeChoice][specTypeChoice]+pricesDrinks[drinkChoice]);
-}
-void displayFooterOrder(){
     printf("-------------------\n"
            "a) Confirm order\n"
            "b) Go back\n");
 }
+

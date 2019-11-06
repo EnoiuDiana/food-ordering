@@ -9,6 +9,7 @@ int getChoiceIndex(int nrOfChoices,int *state){
     //consume new line
     getchar();
     if(choice == 'a'+nrOfChoices){
+        choiceIndex = choice - 'a';
         (*state)--;
     } else {
         choiceIndex = choice - 'a';
