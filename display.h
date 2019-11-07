@@ -12,14 +12,12 @@
 #define MAX_DR_CUT_NAME 15
 
 void displayFoodTypes(int nrOfFoodTypes,char foodTypes[][MAX_FOOD_TYPE_NAME]);
-void displaySpecificFoods(int nrSpecType[],int typeChoice,char foodTypes[][MAX_FOOD_TYPE_NAME],
-                          char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int prices[][MAX_NR_PRICES]);
-void displayDrinks(char foodTypes[][MAX_FOOD_TYPE_NAME],int typeChoice,int nrDrinks,char drinks[][MAX_DR_CUT_NAME],
+void displaySpecificFoods(int nrSpecType,char foodType[],char specTypes[][MAX_SPEC_TYPE_NAME],int prices[]);
+void displayDrinks(char foodType[],int nrDrinks,char drinks[][MAX_DR_CUT_NAME],
                    int pricesDrinks[]);
 void displayCutlery(char cutlery[][MAX_DR_CUT_NAME]);
 void displayAddInfo(char addinfo[],int *state);
-void displayOrder(char specTypes[][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME],int typeChoice,int specTypeChoice,
-                  int prices[][MAX_NR_PRICES],char drinks[][MAX_DR_CUT_NAME],int drinkChoice,int pricesDrinks[],
-                  char cutlery[][MAX_DR_CUT_NAME],int cutleryChoice,char addinfo[],char username[]);
+void displayOrder(char specType[],int price,char drink[],int priceDrink,
+                  char cutlery[],char addinfo[],char username[]);
 
 #endif //FOOD_ORDERING_DISPLAY_H

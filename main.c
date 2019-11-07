@@ -35,12 +35,12 @@ int main() {
                 break;
             }
             case 2: {
-                displaySpecificFoods(nrSpecType,typeChoice,foodTypes,specTypes,prices);
+                displaySpecificFoods(nrSpecType[typeChoice],foodTypes[typeChoice],specTypes[typeChoice],prices[typeChoice]);
                 specTypeChoice = getChoiceIndex(nrSpecType[typeChoice], &state);
                 break;
             }
             case 3: {
-                displayDrinks(foodTypes,typeChoice,nrDrinks,drinks,pricesDrinks);
+                displayDrinks(foodTypes[typeChoice],nrDrinks,drinks,pricesDrinks);
                 drinkChoice = getChoiceIndex(nrDrinks, &state);
                 break;
             }
@@ -54,7 +54,8 @@ int main() {
                 break;
             }
             case 6: {
-                displayOrder(specTypes,typeChoice,specTypeChoice,prices,drinks,drinkChoice,pricesDrinks,cutlery,cutleryChoice,addInfo,username);
+                displayOrder(specTypes[typeChoice][specTypeChoice],prices[typeChoice][specTypeChoice],
+                        drinks[drinkChoice],pricesDrinks[drinkChoice],cutlery[cutleryChoice],addInfo,username);
                 confirmChoice = getChoiceIndex(1, &state);
                 confirmOrder(confirmChoice, &order, &state);
                 break;
