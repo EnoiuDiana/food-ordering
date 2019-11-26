@@ -113,5 +113,21 @@ int main() {
         }
     }
     printf("Order confirmed! Thank you for buying from us, %s!\n",username);
+    for(int i=0;i<nrOfFoodTypes;i++){
+        for(int j=0;j<=nrSpecType[i];j++){
+            free(specFoods[i][j]);
+        }
+        free(specFoods[i]);
+        free(foodTypes[i]);
+        free(priceFoods[i]);
+    }
+    free(specFoods);
+    free(foodTypes);
+    free(priceFoods);
+    for(int i=0;i<nrDrinks;i++){
+        free(drinks[i]);
+    }
+    free(drinks);
+    free(pricesDrinks);
     return 0;
 }
