@@ -10,6 +10,7 @@ int main() {
     char *pt;
     int nrOfFoodTypes,nrDrinks,nrSpecType[MAX_NR_SPEC_TYPES],k;
     printf("PLease load the data:\n");
+    //loading food data
     gets(line);
     sscanf(line,"%d",&nrOfFoodTypes);
     char ** foodTypes = (char**)malloc(nrOfFoodTypes * sizeof(char*));
@@ -22,24 +23,21 @@ int main() {
         gets(string);
         pt = strtok(string, ":");
         strcpy(foodTypes[i],pt);
-
-        k = 0;//if k even it extracts food name, if k odd it extracts price
+        pt = strtok(NULL, "(");
+        k = 0;//k counts the number of spec foods
         while (pt != NULL) {
-            if (k % 2 == 0) {
-                pt = strtok(NULL, "(");
-                if(pt==NULL){continue;}//if i dont use this it will crash
-                pt = strtok(NULL, "-");
-                specFoods[i][k/2] = (char*)malloc(MAX_SPEC_TYPE_NAME * sizeof(char));
-                strcpy(specFoods[i][k/2],pt);
-                specFoods[i][k/2][strlen(pt)-1]='\0';
-                nrSpecType[i]=k/2;
-            } else {
-                pt = strtok(NULL, ")");
-                sscanf(pt, "%lf", &priceFoods[i][k / 2]);
-            }
+            pt = strtok(NULL, "-");
+            specFoods[i][k] = (char*)malloc(MAX_SPEC_TYPE_NAME * sizeof(char));
+            strcpy(specFoods[i][k],pt);
+            specFoods[i][k][strlen(pt)-1]='\0';
+            pt = strtok(NULL, ")");
+            sscanf(pt, "%lf", &priceFoods[i][k]);
+            pt = strtok(NULL, "(");
             k++;
         }
+        nrSpecType[i]=k;
     }
+    //loading drinks data
     gets(line);
     sscanf(line,"%d",&nrDrinks);
     char ** drinks = (char**)malloc(nrDrinks * sizeof(char*));
@@ -48,25 +46,16 @@ int main() {
     strrev(string); // reversed the string so that if drinks name contain '-' it won't affect the program
     pt = strtok(string,"-");
     for(int i=0;i<nrDrinks;i++){
+        if(i!=0)pt = strtok(NULL,"-");
         sscanf(strrev(pt),"%lf",&pricesDrinks[i]);
         drinks[i] = (char*)malloc(MAX_DRINK_NAME * sizeof(char));
         pt = strtok(NULL,"(");
         strcpy(drinks[i],pt);
         strrev(drinks[i]);
-        if(pt==NULL){continue;}
-        pt = strtok(NULL,"-");
     }
-    for(int i=0;i<nrOfFoodTypes;i++){
-        printf("%s: ", foodTypes[i]);
-        for(int j=0;j<=nrSpecType[i];j++){
-            printf("(%s - %.2lf) ", specFoods[i][j], priceFoods[i][j]);
-        }
-        printf("\n");
-    }
-    printf("Welcome to Food Thingies!\nPlease sign in to continue!\n");
-    // food data
-
+    //load data for cutlery and addinfo
     char cutlery[][MAX_CUTLERY_NAME] = {"Yes","No,thanks"}, addInfo[200];
+    printf("Welcome to Food Thingies!\nPlease sign in to continue!\n");
     //user input
     char username[20], password[20];
     int typeChoice, specTypeChoice, drinkChoice, cutleryChoice, confirmChoice;

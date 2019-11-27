@@ -17,11 +17,11 @@ void displayFoodTypes(int nrOfFoodTypes,char ** foodTypes){
 void displaySpecificFoods(int nrSpecType,char * foodType,char ** specTypes,double * prices){
     //selecting specific food
     printf("Please choose the type of %s:\n",foodType);
-    for(int i=0; i<=nrSpecType; i++){
+    for(int i=0; i<nrSpecType; i++){
         putchar('a'+i);
         printf(") %s: %.2lf\n",specTypes[i],prices[i]);
     }
-    printf("%c) Go back.\n",'a'+nrSpecType+1);
+    printf("%c) Go back.\n",'a'+nrSpecType);
 }
 void displayDrinks(char * foodType,int nrDrinks,char ** drinks,
                    double * pricesDrinks){
