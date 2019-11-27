@@ -55,7 +55,7 @@ int main() {
     }
     //load data for cutlery and addinfo
     char cutlery[][MAX_CUTLERY_NAME] = {"Yes","No,thanks"}, addInfo[200];
-    printf("Welcome to Food Thingies!\nPlease sign in to continue!\n");
+
     //user input
     char username[20], password[20];
     int typeChoice, specTypeChoice, drinkChoice, cutleryChoice, confirmChoice;
@@ -64,6 +64,7 @@ int main() {
     while(!order) {
         switch(state) {
             case 0: {
+                printf("Welcome to Food Thingies!\n");
                 inputUserData(username,password);
                 state++;
                 break;
