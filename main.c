@@ -70,7 +70,6 @@ int main() {
         fgets(line,MAX_LINE,data);
         line[strlen(line)-1] = '\0';
         sscanf(line,"%d",&nrOfFoodTypes);
-        printf("%d\n",nrOfFoodTypes);
         foodTypes = (char **) malloc(nrOfFoodTypes * sizeof(char *));
         specFoods = (char ***) malloc(nrOfFoodTypes * sizeof(char **));
         priceFoods = (double **) malloc(nrOfFoodTypes * sizeof(double *));
@@ -79,8 +78,7 @@ int main() {
             specFoods[i] = (char **) malloc(MAX_NR_SPEC_TYPES * sizeof(char *));
             priceFoods[i] = (double *) malloc(MAX_NR_SPEC_TYPES * sizeof(double));
             fgets(string,MAX_STRING,data);
-            string[strlen(string)-1] = '\0';
-            puts(string);
+            string[strlen(string)-2] = '\0';
             pt = strtok(string, ":");
             strcpy(foodTypes[i], pt);
             pt = strtok(NULL, "(");
