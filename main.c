@@ -10,7 +10,7 @@ int main() {
     //open file data.txt
     FILE *data;
     data = fopen("C:\\Users\\edian\\Desktop\\Faculta\\an1\\cp lab\\food-data-provider\\data.txt","r");
-    int nrOfFoodTypes, nrDrinks, nrSpecType[MAX_NR_SPEC_TYPES], k;
+    int nrOfFoodTypes, nrDrinks, *nrSpecType;
     char **foodTypes;
     char ***specFoods;
     double **priceFoods;
@@ -26,26 +26,25 @@ int main() {
         foodTypes = (char **) malloc(nrOfFoodTypes * sizeof(char *));
         specFoods = (char ***) malloc(nrOfFoodTypes * sizeof(char **));
         priceFoods = (double **) malloc(nrOfFoodTypes * sizeof(double *));
+        nrSpecType = (int *) malloc(nrOfFoodTypes * sizeof(int));
         for (int i = 0; i < nrOfFoodTypes; i++) {
-            foodTypes[i] = (char *) malloc(MAX_FOOD_TYPE_NAME * sizeof(char));
-            specFoods[i] = (char **) malloc(MAX_NR_SPEC_TYPES * sizeof(char *));
-            priceFoods[i] = (double *) malloc(MAX_NR_SPEC_TYPES * sizeof(double));
             gets(string);
-            pt = strtok(string, ":");
+            pt = strtok(string, " ");
+            foodTypes[i] = (char *) malloc(MAX_FOOD_TYPE_NAME * sizeof(char));
             strcpy(foodTypes[i], pt);
-            pt = strtok(NULL, "(");
-            k = 0;//k counts the number of spec foods
-            while (pt != NULL) {
+            pt = strtok(NULL, ":");
+            sscanf(pt,"%d",&nrSpecType[i]);
+            specFoods[i] = (char **) malloc(nrSpecType[i] * sizeof(char *));
+            priceFoods[i] = (double *) malloc(nrSpecType[i] * sizeof(double));
+            for(int j=0;j<nrSpecType[i];j++) {
                 pt = strtok(NULL, "-");
-                specFoods[i][k] = (char *) malloc(MAX_SPEC_TYPE_NAME * sizeof(char));
-                strcpy(specFoods[i][k], pt);
-                specFoods[i][k][strlen(pt) - 1] = '\0';
+                specFoods[i][j] = (char *) malloc(MAX_SPEC_TYPE_NAME * sizeof(char));
+                strcpy(specFoods[i][j], pt);
+                specFoods[i][j][strlen(pt) - 1] = '\0';
+                strcpy(specFoods[i][j],specFoods[i][j]+2);
                 pt = strtok(NULL, ")");
-                sscanf(pt, "%lf", &priceFoods[i][k]);
-                pt = strtok(NULL, "(");
-                k++;
+                sscanf(pt, "%lf", &priceFoods[i][j]);
             }
-            nrSpecType[i] = k;
         }
         //loading drinks data
         gets(line);
@@ -53,7 +52,7 @@ int main() {
         drinks = (char **) malloc(nrDrinks * sizeof(char *));
         pricesDrinks = (double *) malloc(nrDrinks * sizeof(double));
         gets(string);
-        strrev(string); // reversed the string so that if drinks name contain '-' it won't affect the program
+        strrev(string); // reversed the string so that if drink name contain '-' it won't affect the program
         pt = strtok(string, "-");
         for (int i = nrDrinks-1; i >= 0; i--) {
             if (i != nrDrinks-1)pt = strtok(NULL, "-");
@@ -73,27 +72,25 @@ int main() {
         foodTypes = (char **) malloc(nrOfFoodTypes * sizeof(char *));
         specFoods = (char ***) malloc(nrOfFoodTypes * sizeof(char **));
         priceFoods = (double **) malloc(nrOfFoodTypes * sizeof(double *));
+        nrSpecType = (int *) malloc(nrOfFoodTypes * sizeof(int));
         for (int i = 0; i < nrOfFoodTypes; i++) {
-            foodTypes[i] = (char *) malloc(MAX_FOOD_TYPE_NAME * sizeof(char));
-            specFoods[i] = (char **) malloc(MAX_NR_SPEC_TYPES * sizeof(char *));
-            priceFoods[i] = (double *) malloc(MAX_NR_SPEC_TYPES * sizeof(double));
             fgets(string,MAX_STRING,data);
-            string[strlen(string)-2] = '\0';
-            pt = strtok(string, ":");
+            pt = strtok(string, " ");
+            foodTypes[i] = (char *) malloc(MAX_FOOD_TYPE_NAME * sizeof(char));
             strcpy(foodTypes[i], pt);
-            pt = strtok(NULL, "(");
-            k = 0;//k counts the number of spec foods
-            while (pt != NULL) {
+            pt = strtok(NULL, ":");
+            sscanf(pt,"%d",&nrSpecType[i]);
+            specFoods[i] = (char **) malloc(nrSpecType[i] * sizeof(char *));
+            priceFoods[i] = (double *) malloc(nrSpecType[i] * sizeof(double));
+            for(int j=0;j<nrSpecType[i];j++) {
                 pt = strtok(NULL, "-");
-                specFoods[i][k] = (char *) malloc(MAX_SPEC_TYPE_NAME * sizeof(char));
-                strcpy(specFoods[i][k], pt);
-                specFoods[i][k][strlen(pt) - 1] = '\0';
+                specFoods[i][j] = (char *) malloc(MAX_SPEC_TYPE_NAME * sizeof(char));
+                strcpy(specFoods[i][j], pt);
+                specFoods[i][j][strlen(pt) - 1] = '\0';
+                strcpy(specFoods[i][j],specFoods[i][j]+2);
                 pt = strtok(NULL, ")");
-                sscanf(pt, "%lf", &priceFoods[i][k]);
-                pt = strtok(NULL, "(");
-                k++;
+                sscanf(pt, "%lf", &priceFoods[i][j]);
             }
-            nrSpecType[i] = k;
         }
         //loading drinks data
         fgets(line,MAX_LINE,data);

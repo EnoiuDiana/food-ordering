@@ -128,7 +128,6 @@ void signinUp(char username[],char password[],int * sign_up,char message[],char 
            validatePasswordSignUp(&pass_have_digit,password,err_digits) ){
             (*sign_up)=1;
         }
-
     }
 }
 
