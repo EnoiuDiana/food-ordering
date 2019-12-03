@@ -114,7 +114,7 @@ int main() {
     //load data for cutlery and addinfo
     char cutlery[][MAX_CUTLERY_NAME] = {"Yes","No,thanks"}, addInfo[200];
     //user input
-    char username[20], password[20];
+    char username[200], password[200];
     int typeChoice, specTypeChoice, drinkChoice, cutleryChoice, confirmChoice;
 
     int state=0, order=0;
