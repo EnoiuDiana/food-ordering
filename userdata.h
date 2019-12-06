@@ -4,7 +4,6 @@
 
 #ifndef FOOD_ORDERING_USERDATA_H
 #define FOOD_ORDERING_USERDATA_H
-
 void inputUserData(char username[],char password[]);
 int validateUsernameSignIn(char username[]);
 int validatePasswordSignIn(char password[]);

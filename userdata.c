@@ -63,7 +63,6 @@ int validatePasswordSignUp(int (*fullfillscondition)(char[]),char password[],cha
     if(fullfillscondition(password)) return 1;
     else printf("%s\n",error);
     return 0;
-
 }
 int length(char password[]){
     if(strlen(password)<MIN_PASSWORD_LENGTH)return 0;
@@ -81,7 +80,6 @@ int pass_special_char(char password[]){
     if(strchr(password,'_')!=NULL)return 1;
     if(strchr(password,'!')!=NULL)return 1;
     return 0;
-
 }
 int pass_have_digit(char password[]){
     int ok=0;
