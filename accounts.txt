@@ -1,6 +1,4 @@
 Polyalphabetic Substitution Cipher using Tabula Recta with characters from ' ' to '~' (ASCII table)
-2
+1
 admin
-admin
-alex
-abcdef456:;<=>?
+aeolr
