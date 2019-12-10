@@ -1,0 +1,6 @@
+Polyalphabetic Substitution Cipher using Tabula Recta with characters from ' ' to '~' (ASCII table)
+2
+admin
+admin
+alex
+abcdef456:;<=>?

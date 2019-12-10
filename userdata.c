@@ -6,6 +6,8 @@
 #include "userdata.h"
 #include <ctype.h>
 #define MIN_PASSWORD_LENGTH 7
+#define TABULA_RECTA_NO_ROWS_COLUMNS 200
+#define MAX_LINE 200
 #define ERROR_PASSWORD_LONG "The password must be at least 7 chars long"
 #define ERROR_PASSWORD_NOT_USERNAME "The password must not contain the username"
 #define ERROR_PASSWORD_SPECIAL_CHAR "The password must contain one of the following characters: {'.','_','!'}"
@@ -20,8 +22,10 @@
 #define INCORRECT_PASSWORD "Incorrect password"
 
 void inputUserData(char username[],char password[]){
-    int sign_in_up=0,state=0;
+    int sign_in_up=0,state=0,tabulaRecta[TABULA_RECTA_NO_ROWS_COLUMNS][TABULA_RECTA_NO_ROWS_COLUMNS];
     char sign;
+
+    generateEncryptionDecryptionKey(tabulaRecta);
     while(!sign_in_up){
         switch(state){
             case 0: {
@@ -34,14 +38,15 @@ void inputUserData(char username[],char password[]){
                 break;
             }
             case 1: {
-                //signin in
-                if(sign == 'a')signinIn(username,password,&sign_in_up,&state);
+                //signing in
+                if(sign == 'a')signingIn(username,password,&sign_in_up,&state);
                 else state++;
                 break;
             }
             case 2: {
-                //signin up
-                signinUp(username,password,&sign_in_up);
+                //signing up
+                FILE * accounts;
+                signingUp(username,password,&sign_in_up,tabulaRecta,accounts);
                 break;
             }
         }
@@ -88,7 +93,7 @@ int pass_have_digit(char password[]){
     }
     return 0;
 }
-void signinIn(char username[],char password[],int * sign_in,int *state){
+void signingIn(char username[],char password[],int * sign_in,int *state){
     printf("---%s\n"
            "---Username\n",SIGNING_IN);
     gets(username);
@@ -101,8 +106,7 @@ void signinIn(char username[],char password[],int * sign_in,int *state){
         (*state)--;
     }
 }
-void signinUp(char username[],char password[],int * sign_up){
-
+void signingUp(char username[],char password[],int * sign_up,int tabulaRecta[][TABULA_RECTA_NO_ROWS_COLUMNS],FILE * createNewAccount){
     printf("%s\n"
            "---Username\n",SIGNING_UP);
     gets(username);
@@ -119,7 +123,36 @@ void signinUp(char username[],char password[],int * sign_up){
             }
         }
     }
+    //appending username and password
+    createNewAccount = fopen("C:\\Users\\edian\\Desktop\\Faculta\\an1\\cp lab\\food-ordering\\accounts.txt","a+");
+    fprintf(createNewAccount,"%s\n",username);
+    encryptPassword(password,tabulaRecta);
+    fprintf(createNewAccount,"%s\n",password);
+    fclose(createNewAccount);
+    //changing no of users
+    createNewAccount = fopen("C:\\Users\\edian\\Desktop\\Faculta\\an1\\cp lab\\food-ordering\\accounts.txt","r+");
+    char line[MAX_LINE];int noOfCharsForKey,noOfAccounts;
+    fgets(line,MAX_LINE,createNewAccount);
+    noOfCharsForKey=strlen(line);
+    fgets(line,MAX_LINE,createNewAccount);
+    sscanf(line,"%d",&noOfAccounts);
+    noOfAccounts++;
+    fseek(createNewAccount,noOfCharsForKey+1,SEEK_SET);
+    fprintf(createNewAccount, "%d", noOfAccounts);
+    fclose(createNewAccount);
 }
-
-
-
+void generateEncryptionDecryptionKey(int tabulaRecta[][TABULA_RECTA_NO_ROWS_COLUMNS]){
+    for(int i=' ';i<='~';i++){
+        for(int j=' ';j<='~'-i+' ';j++){
+            tabulaRecta[i][j]=i+j-' ';
+        }
+        for(int j='~'-i+' '+1;j<='~';j++){
+            tabulaRecta[i][j]=j-('~'-i+1);
+        }
+    }
+}
+void encryptPassword(char password[],int tabulaRecta[][TABULA_RECTA_NO_ROWS_COLUMNS]){
+    for(int a=0;a<strlen(password); a++){
+      password[a]=tabulaRecta[password[a]][a + ' '];
+  }
+}

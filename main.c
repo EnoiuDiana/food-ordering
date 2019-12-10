@@ -9,31 +9,32 @@ int main() {
     //open file data.txt
     FILE *data;
     data = fopen("C:\\Users\\edian\\Desktop\\Faculta\\an1\\cp lab\\food-data-provider\\data.txt","r");
-    int nrOfFoodTypes, nrDrinks, *nrSpecType;
-    char **foodTypes, ***specFoods, **drinks;
-    double **priceFoods, *pricesDrinks;
+    //initialization
+    int nrOfFoodTypes=0, nrDrinks=0;
+    int *nrSpecType = (int *) malloc(nrOfFoodTypes * sizeof(int));
+    char **foodTypes = (char **) malloc(nrOfFoodTypes * sizeof(char *));
+    char ***specFoods = (char ***) malloc(nrOfFoodTypes * sizeof(char **));
+    char **drinks = (char **) malloc(nrDrinks * sizeof(char *));
+    double **priceFoods = (double **) malloc(nrOfFoodTypes * sizeof(double *));
+    double *pricesDrinks = (double *) malloc(nrDrinks * sizeof(double));
     if(data == NULL){
         data = stdin;
         printf("PLease load the data:\n");
     }
     //loading food data
     readNoOf(&nrOfFoodTypes,data);
-    foodTypes = (char **) malloc(nrOfFoodTypes * sizeof(char *));
-    specFoods = (char ***) malloc(nrOfFoodTypes * sizeof(char **));
-    priceFoods = (double **) malloc(nrOfFoodTypes * sizeof(double *));
-    nrSpecType = (int *) malloc(nrOfFoodTypes * sizeof(int));
     readFood(foodTypes,nrOfFoodTypes,nrSpecType,specFoods,priceFoods,data);
     //loading drinks data
     readNoOf(&nrDrinks,data);
-    drinks = (char **) malloc(nrDrinks * sizeof(char *));
-    pricesDrinks = (double *) malloc(nrDrinks * sizeof(double));
     readDrinks(nrDrinks,drinks,pricesDrinks,data);
+    //close file data.txt
+    fclose(data);
     //load data for cutlery and addinfo
     char cutlery[][MAX_CUTLERY_NAME] = {"Yes","No,thanks"}, addInfo[200];
     //user input
     char username[200], password[200];
     int typeChoice=0, specTypeChoice=0, drinkChoice=0, cutleryChoice=0, confirmChoice=0;
-
+    //sign in/up and order food
     int state=0, order=0;
     while(!order) {
         switch(state) {
@@ -79,7 +80,7 @@ int main() {
     printf("Order confirmed! Thank you for buying from us, %s!\n",username);
     //free memory
     for(int i=0;i<nrOfFoodTypes;i++){
-        for(int j=0;j<=nrSpecType[i];j++){
+        for(int j=0;j<nrSpecType[i];j++){
             free(specFoods[i][j]);
         }
         free(specFoods[i]);
@@ -89,13 +90,12 @@ int main() {
     free(specFoods);
     free(foodTypes);
     free(priceFoods);
-    for(int i=0;i<nrDrinks;i++){
+    free(nrSpecType);
+    for (int i = 0; i<nrDrinks; i++){
         free(drinks[i]);
     }
     free(drinks);
     free(pricesDrinks);
-    //close file data.txt
-    fclose(data);
     return 0;
 }
 
