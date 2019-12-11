@@ -5,8 +5,9 @@
 #ifndef FOOD_ORDERING_LOADINGDATA_H
 #define FOOD_ORDERING_LOADINGDATA_H
 #include <stdio.h>
-void readNoOf(int * noOf, FILE * data);
-void readFood(char ** foodTypes,int nrOfFoodTypes,int * nrSpecType,char *** specFoods,double **priceFoods,
+void readFood(char *** foodTypesAddr,int *nrOfFoodTypesAddr,int ** nrSpecTypeAddr,char **** specFoodsAddr,double ***priceFoodsAddr,
               FILE * data);
-void readDrinks(int nrDrinks,char **drinks,double *pricesDrinks,FILE * data);
+void readDrinks(int *nrDrinksAddr,char ***drinksAddr,double **pricesDrinksAddr,FILE * data);
+void freeData(int nrOfFoodTypes,int *nrSpecType,char ***specFoods,char **foodTypes,double **priceFoods,int nrDrinks,
+              char **drinks,double *pricesDrinks);
 #endif //FOOD_ORDERING_LOADINGDATA_H

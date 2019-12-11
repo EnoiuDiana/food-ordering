@@ -10,23 +10,17 @@ int main() {
     FILE *data;
     data = fopen("C:\\Users\\edian\\Desktop\\Faculta\\an1\\cp lab\\food-data-provider\\data.txt","r");
     //initialization
-    int nrOfFoodTypes=0, nrDrinks=0;
-    int *nrSpecType = (int *) malloc(nrOfFoodTypes * sizeof(int));
-    char **foodTypes = (char **) malloc(nrOfFoodTypes * sizeof(char *));
-    char ***specFoods = (char ***) malloc(nrOfFoodTypes * sizeof(char **));
-    char **drinks = (char **) malloc(nrDrinks * sizeof(char *));
-    double **priceFoods = (double **) malloc(nrOfFoodTypes * sizeof(double *));
-    double *pricesDrinks = (double *) malloc(nrDrinks * sizeof(double));
+    int nrOfFoodTypes,nrDrinks,*nrSpecType;
+    char **foodTypes,***specFoods,**drinks;
+    double **priceFoods,*pricesDrinks;
     if(data == NULL){
         data = stdin;
         printf("PLease load the data:\n");
     }
     //loading food data
-    readNoOf(&nrOfFoodTypes,data);
-    readFood(foodTypes,nrOfFoodTypes,nrSpecType,specFoods,priceFoods,data);
+    readFood(&foodTypes,&nrOfFoodTypes,&nrSpecType,&specFoods,&priceFoods,data);
     //loading drinks data
-    readNoOf(&nrDrinks,data);
-    readDrinks(nrDrinks,drinks,pricesDrinks,data);
+    readDrinks(&nrDrinks,&drinks,&pricesDrinks,data);
     //close file data.txt
     fclose(data);
     //load data for cutlery and addinfo
@@ -79,23 +73,7 @@ int main() {
     }
     printf("Order confirmed! Thank you for buying from us, %s!\n",username);
     //free memory
-    for(int i=0;i<nrOfFoodTypes;i++){
-        for(int j=0;j<nrSpecType[i];j++){
-            free(specFoods[i][j]);
-        }
-        free(specFoods[i]);
-        free(foodTypes[i]);
-        free(priceFoods[i]);
-    }
-    free(specFoods);
-    free(foodTypes);
-    free(priceFoods);
-    free(nrSpecType);
-    for (int i = 0; i<nrDrinks; i++){
-        free(drinks[i]);
-    }
-    free(drinks);
-    free(pricesDrinks);
+    freeData(nrOfFoodTypes,nrSpecType,specFoods,foodTypes,priceFoods,nrDrinks,drinks,pricesDrinks);
     return 0;
 }
 

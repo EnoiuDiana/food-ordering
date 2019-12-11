@@ -10,13 +10,16 @@
 #define MAX_SPEC_TYPE_NAME 300
 #define MAX_DRINK_NAME 50
 
-void readNoOf(int *noOf, FILE * data){
+void readFood(char *** foodTypesAddr,int *nrOfFoodTypesAddr,int ** nrSpecTypeAddr,char **** specFoodsAddr,double ***priceFoodsAddr,
+              FILE * data){
+    int nrOfFoodTypes;
     char line[MAX_LINE];
     fgets(line,MAX_LINE,data);
-    sscanf(line,"%d",&(*noOf));
-}
-void readFood(char ** foodTypes,int nrOfFoodTypes,int * nrSpecType,char *** specFoods,double **priceFoods,
-              FILE * data){
+    sscanf(line,"%d",&nrOfFoodTypes);
+    int *nrSpecType = (int *) malloc(nrOfFoodTypes * sizeof(int));
+    char **foodTypes = (char **) malloc(nrOfFoodTypes * sizeof(char *));
+    char ***specFoods = (char ***) malloc(nrOfFoodTypes * sizeof(char **));
+    double **priceFoods = (double **) malloc(nrOfFoodTypes * sizeof(double *));
     char * pt, string[MAX_STRING];
     for (int i = 0; i < nrOfFoodTypes; i++) {
         foodTypes[i] = (char *) malloc(MAX_FOOD_TYPE_NAME * sizeof(char));
@@ -36,8 +39,19 @@ void readFood(char ** foodTypes,int nrOfFoodTypes,int * nrSpecType,char *** spec
             sscanf(pt, "%lf", &(priceFoods[i][j]));
         }
     }
+    *nrOfFoodTypesAddr = nrOfFoodTypes;
+    *foodTypesAddr = foodTypes;
+    *nrSpecTypeAddr = nrSpecType;
+    *specFoodsAddr = specFoods;
+    *priceFoodsAddr = priceFoods;
 }
-void readDrinks(int nrDrinks,char **drinks,double *pricesDrinks,FILE * data){
+void readDrinks(int *nrDrinksAddr,char ***drinksAddr,double **pricesDrinksAddr,FILE * data){
+    int nrDrinks;
+    char line[MAX_LINE];
+    fgets(line,MAX_LINE,data);
+    sscanf(line,"%d",&nrDrinks);
+    char **drinks = (char **) malloc(nrDrinks * sizeof(char *));
+    double *pricesDrinks = (double *) malloc(nrDrinks * sizeof(double));
     char * pt, string[MAX_STRING];
     fgets(string,MAX_STRING,data);
     strrev(string); // reversed the string so that if drinks name contain '-' it won't affect the program
@@ -50,4 +64,27 @@ void readDrinks(int nrDrinks,char **drinks,double *pricesDrinks,FILE * data){
         strcpy(drinks[i], pt);
         strrev(drinks[i]);
     }
+    *nrDrinksAddr = nrDrinks;
+    *drinksAddr = drinks;
+    *pricesDrinksAddr = pricesDrinks;
+}
+void freeData(int nrOfFoodTypes,int *nrSpecType,char ***specFoods,char **foodTypes,double **priceFoods,int nrDrinks,
+        char **drinks,double *pricesDrinks){
+    for(int i=0;i<nrOfFoodTypes;i++){
+        for(int j=0;j<nrSpecType[i];j++){
+            free(specFoods[i][j]);
+        }
+        free(specFoods[i]);
+        free(foodTypes[i]);
+        free(priceFoods[i]);
+    }
+    free(specFoods);
+    free(foodTypes);
+    free(priceFoods);
+    free(nrSpecType);
+    for (int i = 0; i<nrDrinks; i++){
+        free(drinks[i]);
+    }
+    free(drinks);
+    free(pricesDrinks);
 }
