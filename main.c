@@ -1,30 +1,39 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "userdata.h"
 #include "display.h"
 #include "choice.h"
+#include "loadingdata.h"
 
 int main() {
-    printf("Welcome to Food Thingies!\nPlease sign in to continue!\n");
-    // food data
-    int nrOfFoodTypes = 3,nrSpecType[] = {3,2,4},nrDrinks = 4, pricesDrinks[] = {5,5,5,4}, prices[3][MAX_NR_PRICES] = {
-            {21,23,19},
-            {23,21},
-            {23,22,19,21}
-    };
-    char foodTypes[][MAX_FOOD_TYPE_NAME] = {"Pizza","Pasta","Salad"}, specTypes[3][MAX_NR_SPEC_TYPES][MAX_SPEC_TYPE_NAME] = {
-            {"Pizza Carbonara","Pizza Diavola","Pizza Margherita"},
-            {"Chicken alfredo","Mac&cheese"},
-            {"Tuna Salad","Chicken Salad","Greek Salad","Cobb"}
-    };
-    char drinks[][MAX_DR_CUT_NAME] = {"Coca-Cola","Fanta","Lipton","Water"},cutlery[][MAX_DR_CUT_NAME] = {"Yes","No,thanks"}, addInfo[200];
+    //open file data.txt
+    FILE *data;
+    data = fopen("C:\\Users\\edian\\Desktop\\Faculta\\an1\\cp lab\\food-data-provider\\data.txt","r");
+    //initialization
+    int nrOfFoodTypes,nrDrinks,*nrSpecType;
+    char **foodTypes,***specFoods,**drinks;
+    double **priceFoods,*pricesDrinks;
+    if(data == NULL){
+        data = stdin;
+        printf("PLease load the data:\n");
+    }
+    //loading food data
+    readFood(&foodTypes,&nrOfFoodTypes,&nrSpecType,&specFoods,&priceFoods,data);
+    //loading drinks data
+    readDrinks(&nrDrinks,&drinks,&pricesDrinks,data);
+    //close file data.txt
+    fclose(data);
+    //load data for cutlery and addinfo
+    char cutlery[][MAX_CUTLERY_NAME] = {"Yes","No,thanks"}, addInfo[200];
     //user input
-    char username[20], password[20];
-    int typeChoice, specTypeChoice, drinkChoice, cutleryChoice, confirmChoice;
-
+    char username[200], password[200];
+    int typeChoice=0, specTypeChoice=0, drinkChoice=0, cutleryChoice=0, confirmChoice=0;
+    //sign in/up and order food
     int state=0, order=0;
     while(!order) {
         switch(state) {
             case 0: {
+                printf("Welcome to Food Thingies!\n");
                 inputUserData(username,password);
                 state++;
                 break;
@@ -35,7 +44,7 @@ int main() {
                 break;
             }
             case 2: {
-                displaySpecificFoods(nrSpecType[typeChoice],foodTypes[typeChoice],specTypes[typeChoice],prices[typeChoice]);
+                displaySpecificFoods(nrSpecType[typeChoice], foodTypes[typeChoice], specFoods[typeChoice], priceFoods[typeChoice]);
                 specTypeChoice = getChoiceIndex(nrSpecType[typeChoice], &state);
                 break;
             }
@@ -54,8 +63,8 @@ int main() {
                 break;
             }
             case 6: {
-                displayOrder(specTypes[typeChoice][specTypeChoice],prices[typeChoice][specTypeChoice],
-                        drinks[drinkChoice],pricesDrinks[drinkChoice],cutlery[cutleryChoice],addInfo,username);
+                displayOrder(specFoods[typeChoice][specTypeChoice], priceFoods[typeChoice][specTypeChoice],
+                             drinks[drinkChoice], pricesDrinks[drinkChoice], cutlery[cutleryChoice], addInfo, username);
                 confirmChoice = getChoiceIndex(1, &state);
                 confirmOrder(confirmChoice, &order, &state);
                 break;
@@ -63,5 +72,8 @@ int main() {
         }
     }
     printf("Order confirmed! Thank you for buying from us, %s!\n",username);
+    //free memory
+    freeData(nrOfFoodTypes,nrSpecType,specFoods,foodTypes,priceFoods,nrDrinks,drinks,pricesDrinks);
     return 0;
 }
+

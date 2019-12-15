@@ -1,0 +1,4 @@
+Polyalphabetic Substitution Cipher using Tabula Recta with characters from ' ' to '~' (ASCII table)
+1
+admin
+aeolr
