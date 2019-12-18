@@ -42,6 +42,5 @@ void freeDrinks(int nrDrinks,drink * d){
     for (int i = 0; i<nrDrinks; i++){
         free(d[i].name);
     }
-    free(d->name);
-    //free(d->price);
+    free(d);
 }

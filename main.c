@@ -6,21 +6,20 @@
 #include "foodTypes.h"
 #include "drinks.h"
 #include "specFoods.h"
-void freeData(specFood ** s,int nrOfFoodTypes, char **foodType, int nrDrinks,drink  * d);
+void freeData(foodType* foodTypes,int nrOfFoodTypes, int nrDrinks,drink  * d);
 int main() {
     //open file data.txt
     FILE *data;
     data = fopen("C:\\Users\\edian\\Desktop\\Faculta\\an1\\cp lab\\food-data-provider\\data.txt","r");
     //initialization
     int nrOfFoodTypes,nrDrinks,*noOfSpecTypes;
-    char **foodType;
     if(data == NULL){
         data = stdin;
         printf("PLease load the data:\n");
     }
     //loading food data
-    specFood ** specFoodMatrix;
-    readFood(&specFoodMatrix,&foodType, &nrOfFoodTypes, &noOfSpecTypes, data);
+    foodType * foodTypes;
+    readFood(&foodTypes, &nrOfFoodTypes, data);
     //loading drinks data
     drink * drinks;
     readDrinks(&nrDrinks,&drinks,data);
@@ -42,17 +41,17 @@ int main() {
                 break;
             }
             case 1: {
-                displayFoodTypes(nrOfFoodTypes, foodType);
+                displayFoodTypes(nrOfFoodTypes, foodTypes);
                 typeChoice = getChoiceIndex(nrOfFoodTypes, &state);
                 break;
             }
             case 2: {
-                displaySpecificFoods(noOfSpecTypes[typeChoice], foodType[typeChoice],specFoodMatrix[typeChoice]);
-                specTypeChoice = getChoiceIndex(noOfSpecTypes[typeChoice], &state);
+                displaySpecificFoods(foodTypes[typeChoice].noOfSpecType, foodTypes[typeChoice].name,foodTypes[typeChoice].specType);
+                specTypeChoice = getChoiceIndex(foodTypes[typeChoice].noOfSpecType, &state);
                 break;
             }
             case 3: {
-                displayDrinks(foodType[typeChoice], nrDrinks, drinks);
+                displayDrinks(foodTypes[typeChoice].name, nrDrinks, drinks);
                 drinkChoice = getChoiceIndex(nrDrinks, &state);
                 break;
             }
@@ -66,7 +65,7 @@ int main() {
                 break;
             }
             case 6: {
-                displayOrder(&specFoodMatrix[typeChoice][specTypeChoice],
+                displayOrder(&(foodTypes[typeChoice].specType[specTypeChoice]),
                              &drinks[drinkChoice], cutlery[cutleryChoice], addInfo, &u);
                 confirmChoice = getChoiceIndex(1, &state);
                 confirmOrder(confirmChoice, &order, &state);
@@ -76,11 +75,11 @@ int main() {
     }
     printf("Order confirmed! Thank you for buying from us, %s!\n",u.username);
     //free memory
-    freeData(specFoodMatrix,nrOfFoodTypes, foodType, nrDrinks, drinks);
+    freeData(foodTypes,nrOfFoodTypes, nrDrinks, drinks);
     return 0;
 }
-void freeData(specFood ** s,int nrOfFoodTypes, char **foodType, int nrDrinks,drink  * d){
-    freeSpecFoods(s);
-    freeFoodType(nrOfFoodTypes,foodType);
+void freeData(foodType* foodTypes,int nrOfFoodTypes, int nrDrinks,drink  * d){
+    freeSpecFoods(foodTypes->specType);
+    freeFoodType(nrOfFoodTypes,foodTypes);
     freeDrinks(nrDrinks,d);
 }

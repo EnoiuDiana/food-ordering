@@ -10,5 +10,5 @@ typedef struct _specFood{
 }specFood;
 void readSpecFoods(int noOfSpecTypes,specFood ** specFoodAddr,char *pt);
 void displaySpecificFoods(int noOfSpecTypes, char * foodType, specFood * specFoods);
-void freeSpecFoods(specFood ** s);
+void freeSpecFoods(specFood * s);
 #endif //FOOD_ORDERING_SPECFOODS_H

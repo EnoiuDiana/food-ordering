@@ -28,6 +28,6 @@ void displaySpecificFoods(int noOfSpecTypes, char * foodType, specFood * specFoo
     }
     printf("%c) Go back.\n", 'a' + noOfSpecTypes);
 }
-void freeSpecFoods(specFood ** s){
-    free((**s).name);
+void freeSpecFoods(specFood * s){
+    free(s->name);
 }
