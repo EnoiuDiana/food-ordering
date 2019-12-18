@@ -5,7 +5,12 @@
 #ifndef FOOD_ORDERING_USERDATA_H
 #define FOOD_ORDERING_USERDATA_H
 #define TABULA_RECTA_NO_ROWS_COLUMNS 200
-void inputUserData(char username[],char password[]);
+typedef struct _userdata{
+    char *username;
+    char *password;
+}userdata;
+userdata createUser();
+void inputUserData(userdata * u);
 int validateUsernameSignIn(char username[],char existingUsername[]);
 int validatePasswordSignIn(char password[],char existingPassword[]);
 int validateUsernameSignUp(char username[],char existingUsername[]);

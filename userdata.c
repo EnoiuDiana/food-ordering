@@ -5,6 +5,9 @@
 #include <string.h>
 #include "userdata.h"
 #include <ctype.h>
+#include <stdlib.h>
+#define MAX_USERNAME 100
+#define MAX_PASSWORD 100
 #define MIN_PASSWORD_LENGTH 7
 #define TABULA_RECTA_NO_ROWS_COLUMNS 200
 #define MAX_LINE 200
@@ -21,7 +24,14 @@
 #define DUPLICATE_USER "Please choose another username!"
 #define INCORRECT_PASSWORD "Incorrect password"
 
-void inputUserData(char username[],char password[]){
+userdata createUser(){
+    userdata u;
+    u.username = (char*)malloc(MAX_USERNAME*sizeof(char));
+    u.password = (char*)malloc(MAX_PASSWORD*sizeof(char));
+    return u;
+}
+
+void inputUserData(userdata * u){
     int sign_in_up=0,state=0,tabulaRecta[TABULA_RECTA_NO_ROWS_COLUMNS][TABULA_RECTA_NO_ROWS_COLUMNS];
     char sign;
     FILE*accounts;
@@ -39,13 +49,13 @@ void inputUserData(char username[],char password[]){
             }
             case 1: {
                 //signing in
-                if(sign == 'a')signingIn(username,password,&sign_in_up,&state,tabulaRecta,accounts);
+                if(sign == 'a')signingIn(u->username,u->password,&sign_in_up,&state,tabulaRecta,accounts);
                 else state++;
                 break;
             }
             case 2: {
                 //signing up
-                signingUp(username,password,&sign_in_up,tabulaRecta,accounts);
+                signingUp(u->username,u->password,&sign_in_up,tabulaRecta,accounts);
                 break;
             }
         }
