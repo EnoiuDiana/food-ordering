@@ -31,40 +31,43 @@ int main() {
     userdata u = createUser();
     int typeChoice=0, specTypeChoice=0, drinkChoice=0, cutleryChoice=0, confirmChoice=0;
     //sign in/up and order food
+    enum State {
+        INPUT_USER_DATA, DISPLAY_FOOD_TYPES, DISPLAY_SPECIFIC_FOODS, DISPLAY_DRINKS, DISPLAY_CUTLERY, DISPLAY_ADDINFO, DISPLAY_ORDER
+    };
     int state=0, order=0;
     while(!order) {
         switch(state) {
-            case 0: {
+            case INPUT_USER_DATA: {
                 printf("Welcome to Food Thingies!\n");
                 inputUserData(&u);
                 state++;
                 break;
             }
-            case 1: {
+            case DISPLAY_FOOD_TYPES: {
                 displayFoodTypes(nrOfFoodTypes, foodTypes);
                 typeChoice = getChoiceIndex(nrOfFoodTypes, &state);
                 break;
             }
-            case 2: {
+            case DISPLAY_SPECIFIC_FOODS: {
                 displaySpecificFoods(foodTypes[typeChoice].noOfSpecType, foodTypes[typeChoice].name,foodTypes[typeChoice].specType);
                 specTypeChoice = getChoiceIndex(foodTypes[typeChoice].noOfSpecType, &state);
                 break;
             }
-            case 3: {
+            case DISPLAY_DRINKS: {
                 displayDrinks(foodTypes[typeChoice].name, nrDrinks, drinks);
                 drinkChoice = getChoiceIndex(nrDrinks, &state);
                 break;
             }
-            case 4: {
+            case DISPLAY_CUTLERY: {
                 displayCutlery(cutlery);
                 cutleryChoice = getChoiceIndex(2, &state);
                 break;
             }
-            case 5: {
+            case DISPLAY_ADDINFO: {
                 displayAddInfo(addInfo,&state);
                 break;
             }
-            case 6: {
+            case DISPLAY_ORDER: {
                 displayOrder(&(foodTypes[typeChoice].specType[specTypeChoice]),
                              &drinks[drinkChoice], cutlery[cutleryChoice], addInfo, &u);
                 confirmChoice = getChoiceIndex(1, &state);
